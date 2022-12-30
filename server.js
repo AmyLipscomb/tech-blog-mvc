@@ -12,7 +12,7 @@ const hbs = exphbs.create({});
 const app = express();
 const PORT = process.env.PORT || 6001;
 
-// const { Dog, Owner } = require('./models'); <- UPDATE FOR MODELS IN THIS
+const { Blog, User } = require('./models'); 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
