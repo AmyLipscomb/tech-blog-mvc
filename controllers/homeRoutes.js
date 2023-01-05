@@ -44,8 +44,8 @@ router.get('/login', function(req, res){
 
 });
 
-router.get('/addablog', function(req, res){
-    res.render('addablog', {
+router.get('/addapost', function(req, res){
+    res.render('addapost', {
         user: req.session.user
     });
 });
