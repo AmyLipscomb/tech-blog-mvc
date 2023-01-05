@@ -1,4 +1,4 @@
-const checkAuth = require('./auth/authentication');
+const checkAuth = require('./auth/authentification');
 const { Blog } = require('../models')
 const { Op } = require('sequelize');
 
@@ -6,9 +6,10 @@ const router = require ('express').Router();
 
 router.get('/', function(req, res){
     if (!req.session || !req.session.user) {
-        res.render('login', {
-            user: req.session.user
-        });
+        // res.render('login', {
+        //     user: req.session.user
+        // });
+        res.render("login")
     } 
 });
 
@@ -57,7 +58,7 @@ router.get('/logout', function(req, res){
 });
 
 
-module.exports = router;
+
 router.get('/logout', function(req, res){
     req.session.user = undefined;
     req.session.lastSeen  = undefined;
