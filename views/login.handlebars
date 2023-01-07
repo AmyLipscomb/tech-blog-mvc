@@ -1,6 +1,6 @@
 <div class="cont">
 
-  <form class="form" id="form" method="post">
+  <form class="form" id="form" >
     <h2>Login</h2>
     <div>
       <label for="username">Username:</label>
@@ -13,14 +13,14 @@
     <input class="button" type="submit" value="Login">
 
   </form>
-  <script defer>
-    document.getElementById("form").onsubmit = function (e) {
+  <script defer> console.log("see if this runs")
+    document.getElementById("form").addEventListener("submit", function (e) {
       e.preventDefault();
 
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      fetch('/api/users/login/', {
+      fetch('/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,11 +35,9 @@
             if (res.err) {
               alert(res.err);
             }
-            {
-              {
-                !-- else {
-                  window.location.href = "/blog";
-                } --}
+           
+             else {
+                  window.location.href = "/blog"; 
             }
           });
         }
@@ -47,7 +45,7 @@
           alert('Invalid username/password!');
         }
       });
-    };
+    });
   </script>
 
   <div class="bg-img inner-cont">
