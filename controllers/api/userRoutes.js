@@ -80,17 +80,14 @@ router.post('/', async (req, res) => {
       
           if (userData) {
             if (await bcrypt.compare(user.password, userData.password)) {
-    
-                req.session.user = userData.id;
-                req.session.username = userData.username;
-                req.session.loggedIn = true;
-        
-              res.status(200).json({
-                username: userData.username,
-                email: userData.email,
-                id: userData.id
-              });
               
+                  req.session.save(() => {
+                  req.session.userId = userData.id;
+                  req.session.username = userData.username;
+                  req.session.loggedIn = true;
+            
+                  res.status(200).json(userData);
+                });   
             }
             else {
               res.status(400).json({

@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Blog, User } = require('../../models');
 const checkAuth = require("../auth/authentification");
-const { Op } = require('sequelize');
-require('dotenv').config();
+// const { Op } = require('sequelize');
+// require('dotenv').config();
 
 
 //CREATE new blog post
