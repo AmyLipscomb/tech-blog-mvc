@@ -1,6 +1,6 @@
 <div class="cont">
 
-  <form class="form" id="form" >
+  <form class="form" id="form">
     <h2>Login</h2>
     <div>
       <label for="username">Username:</label>
@@ -14,9 +14,12 @@
 
   </form>
   <script defer> console.log("see if this runs")
-    document.getElementById("form").addEventListener("submit", function (e) {
+    {{!-- document.getElementById("form").addEventListener("submit", function (e) {
+      e.preventDefault(); --}}
+      
+      document.getElementById("form").onsubmit = function (e) {
       e.preventDefault();
-
+      
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
@@ -35,9 +38,9 @@
             if (res.err) {
               alert(res.err);
             }
-           
-             else {
-                  window.location.href = "/blog"; 
+
+            else {
+              window.location.href = "/blog";
             }
           });
         }
@@ -48,7 +51,7 @@
     });
   </script>
 
-  <div class="bg-img inner-cont">
+  {{!-- <div class="bg-img inner-cont">
     <div class="img-text">
       <h1>Amy's Tech Blog</h1>
       <p>
@@ -59,4 +62,4 @@
     </div>
 
   </div>
-</div>
+</div> --}}
