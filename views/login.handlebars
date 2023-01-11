@@ -14,11 +14,9 @@
 
   </form>
   <script defer> console.log("see if this runs")
-    {{!-- document.getElementById("form").addEventListener("submit", function (e) {
-      e.preventDefault(); --}}
-      
-      document.getElementById("form").onsubmit = function (e) {
+    document.querySelector("form").addEventListener("submit", function (e) {
       e.preventDefault();
+
       
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;

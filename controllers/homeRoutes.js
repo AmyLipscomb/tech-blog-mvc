@@ -8,7 +8,6 @@ router.get('/', function(req, res){
         res.render('login', {
             user: req.session.user
         });
-        res.render("login")
     } 
 });
 
