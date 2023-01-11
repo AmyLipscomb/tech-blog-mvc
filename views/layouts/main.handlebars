@@ -20,12 +20,19 @@
                 <button class="menubtn">Menu</button>
                 <ul class="dropdown">
                     <li>
+                        <a href="/home"> Home </a>
+                    </li>
+
+                    <li>
+                        <a href="/dashboard"> Dashboard </a>
+                    </li>
+
+                    <li>
                         <a href="/signup"> Sign Up </a>
                     </li>
                     {{#unless user}}
                     <li>
-                        <a href="/login"> Login </a>
-                        
+                        <a href="/login"> Login </a>  
                     </li>
                     {{/unless}}
                     {{#if user}}
@@ -33,9 +40,7 @@
                         <a href="/logout"> Logout </a>
                     </li>
                     {{/if}}
-                    <li>
-                        <a href="/dashboard"> Add a post to your blog</a>
-                    </li>
+           
             
                 </ul>
             </nav>
