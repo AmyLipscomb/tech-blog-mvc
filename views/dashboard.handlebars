@@ -20,12 +20,12 @@
 
 <body>
     <header>
-        <div class="menu">
+        <div class="dashboard">
             <nav>
-                <button class="menubtn">Menu</button>
+                <button class="dashbtn">Dashboard</button>
                 <ul class="dropdown">
                     <li>
-                        <a href="/signup"> Sign Up </a>
+                        <a href="/home"> Home </a>
                     </li>
                     {{#unless user}}
                     <li>
@@ -38,9 +38,6 @@
                         <a href="/logout"> Logout </a>
                     </li>
                     {{/if}}
-                    <li>
-                        <a href="/dashboard"> View your blog </a>
-                    </li>
             
                 </ul>
             </nav>

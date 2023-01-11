@@ -5,9 +5,9 @@ const router = require ('express').Router();
 
 router.get('/', function(req, res){
     if (!req.session || !req.session.user) {
-        // res.render('login', {
-        //     user: req.session.user
-        // });
+        res.render('login', {
+            user: req.session.user
+        });
         res.render("login")
     } 
 });
