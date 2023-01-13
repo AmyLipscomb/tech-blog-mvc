@@ -4,11 +4,11 @@ const router = require('express').Router();
 
 // GET all posts
 
-router.get('/dashboard', checkAuth, async (req, res) => {
+router.get('/', checkAuth, async (req, res) => {
 try {
     const blogData = await Blog.findAll({
         include: [User], //bringing in the 'User' model
-        where: { userId: req.session.userId }
+        where: { id: req.session.id}
     }) 
     const blogs = blogData.map(blog => blog.get({plain:true}));
     res.render("dashboard", blogs);

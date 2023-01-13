@@ -26,10 +26,10 @@ Blog.init(
         },
 
         //blog_post_creator
-        blog_post_creator: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+        // blog_post_creator: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        // },
 
         //blog_post_date
         blog_post_date: {

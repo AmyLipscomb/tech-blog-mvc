@@ -1,27 +1,24 @@
 const checkAuth = require('./auth/authentification');
-const { Blog } = require('../models')
+const { Blog, User } = require('../models')
 
 const router = require ('express').Router();
 
-router.get('/', function(req, res){
-    if (!req.session || !req.session.user) {
-        res.render('login', {
-            user: req.session.user
-        });
-    } 
-});
+// router.get('/', function(req, res){
+//     if (!req.session || !req.session.user) {
+//         res.render('login', {
+//             user: req.session.user
+//         });
+//     } 
+// });
 
-router.get('/blog', async function(req, res){
+router.get('/', async function(req, res){
     try {
         const blogData = await Blog.findAll({
-          where: {
-            user_id: req.session.user,
-
-          },
+        include: [User]
         });
     
         const blogs = blogData.map((blog) => blog.get({ plain: true }));
-
+        console.log(blogs)
         res.render('blog', {
           blogs,
         });

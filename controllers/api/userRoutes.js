@@ -5,25 +5,25 @@ const checkAuth = require('../auth/authentification');
 
 
 //GET user accounts
-router.get('/', checkAuth, async (req, res) => 
-{
-    try {
-        const userData = await User.findAll({
-            where: {
-                id: req.session.user
-            }
-        });
-        res.status(200).json({
-            name: userData.name,
-            id: userData.id,
-            email: userData.email,
-            username: userData.username,
-        })
-    }
-    catch (err) {
-        res.status(500).json(err);
-    }
-});
+// router.get('/', checkAuth, async (req, res) => 
+// {
+//     try {
+//         const userData = await User.findAll({
+//             where: {
+//                 id: req.session.user
+//             }
+//         });
+//         res.status(200).json({
+//             name: userData.name,
+//             id: userData.id,
+//             email: userData.email,
+//             username: userData.username,
+//         })
+//     }
+//     catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
 
 //CREATE new user account
 router.post('/', async (req, res) => {
@@ -37,16 +37,15 @@ router.post('/', async (req, res) => {
         //create the newuser with the hashed password and save to DB 
         const userData = await User.create (newUser);
 
-            req.session.user = userData.id;
-            req.session.username = userData.username;
-            req.session.loggedIn = true;
-
-        res.status(200).json({
-            name: userData.name,
-            id: userData.id,
-            email: userData.email,
-            username: userData.username,
-        });
+        req.session.save(() => {
+          //updated this on 1/13/2023 am 
+          req.session.user = userData.id;
+          req.session.username = userData.username;
+          req.session.loggedIn = true;
+          console.log(JSON.stringify("test"))
+          res.status(200).send(JSON.stringify({message: "test"}));
+        });   
+      
     } catch (err) {
         res.status(400).json(err);
     }
@@ -80,10 +79,11 @@ router.post('/', async (req, res) => {
           console.log(JSON.stringify(user,null,2))
           console.log(JSON.stringify(userData,null,2))
           if (userData) {
+            //NEED TO CHANGE LINE 82 - since i'm using 'checkPassword' in my user model, I need that instead of the compare! 
             if (await bcrypt.compare(user.password, userData.password)) {
               
                   req.session.save(() => {
-                  req.session.userId = userData.id;
+                  req.session.user = userData.id;
                   req.session.username = userData.username;
                   req.session.loggedIn = true;
                   console.log(JSON.stringify("test"))
