@@ -78,54 +78,84 @@ router.post('/', async (req, res) => {
           });
           console.log(JSON.stringify(user,null,2))
           console.log(JSON.stringify(userData,null,2))
-          if (userData) {
-            //NEED TO CHANGE LINE 82 - since i'm using 'checkPassword' in my user model, I need that instead of the compare! 
-            if (await bcrypt.compare(user.password, userData.password)) {
-              
-                  req.session.save(() => {
-                  req.session.user = userData.id;
-                  req.session.username = userData.username;
-                  req.session.loggedIn = true;
-                  console.log(JSON.stringify("test"))
-                  res.status(200).send(JSON.stringify({message: "test"}));
-                });   
-            }
-            else {
-              res.status(400).json({
-                'err': 'Invalid password!',
-              });
-            }
+          //Added lines 82-99
+          const validPassword = user.checkPassword(req.body.password);
+
+          if(!validPassword){
+            console.log("can't validate password")
+            res.status(400).json({message: 'No user account found!'});
+            return;
           }
-          else {
-            res.status(400).json({
-              'err': 'Unable to find user with that username!',
-            });
-          }
-        } catch (err) {
-          res.status(400).json(err);
+          req.session.save(() => {
+            req.session.user = userData.id;
+            req.session.username = userData.username;
+            req.session.loggedIn = true;
+
+          res.json(user);
+          });
+        } catch(err) {
+          res.status(500).json(err)
         }
-      });
+      })
+        //   if (userData) {
+        //     //NEED TO CHANGE LINE 82 - since i'm using 'checkPassword' in my user model, I need that instead of the compare! 
+        //     if (await bcrypt.compare(user.password, userData.password)) {
+              
+                  // req.session.save(() => {
+                  // req.session.user = userData.id;
+                  // req.session.username = userData.username;
+                  // req.session.loggedIn = true;
+        //           console.log(JSON.stringify("test"))
+        //           res.status(200).send(JSON.stringify({message: "test"}));
+        //         });   
+        //     }
+        //     else {
+        //       res.status(400).json({
+        //         'err': 'Invalid password!',
+        //       });
+        //     }
+        //   }
+        //   else {
+        //     res.status(400).json({
+        //       'err': 'Unable to find user with that username!',
+        //     });
+        //   }
+        // } catch (err) {
+        //   res.status(400).json(err);
+        // }
+      // });
+
+// LOGOUT 
+router.post('/logout', (req, res) => {
+  if(req.session.loggedIn){
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
 
 // DELETE user account
-router.delete('/', checkAuth, async (req, res) =>
-{
-    try {
-        const userData = await User.destroy({
-            where:{
-                id: req.session.user,
-            }
-        })
-        if(!userData){
-            res.status(404).json({ messsage: "No account with this login information"});
-            return;
-        }
-        res.status(200).json({
-            "success" :true
-        });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+// router.delete('/', checkAuth, async (req, res) =>
+// {
+//     try {
+//         const userData = await User.destroy({
+//             where:{
+//                 id: req.session.user,
+//             }
+//         })
+//         if(!userData){
+//             res.status(404).json({ messsage: "No account with this login information"});
+//             return;
+//         }
+//         res.status(200).json({
+//             "success" :true
+//         });
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
     
 
 module.exports = router;
