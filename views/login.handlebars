@@ -13,40 +13,8 @@
     <input class="button" type="submit" value="Login">
 
   </form>
-  <script defer> console.log("see if this runs")
-    document.querySelector("form").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      fetch('/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username,
-          password
-        })
-      }).then(res => {
-        if (res.status === 200) {
-          res.json().then(res => {
-            if (res.err) {
-              alert(res.err);
-            }
-
-            else {
-              window.location.replace("/blog");
-            }
-          });
-        }
-        else {
-          alert('Invalid username/password!');
-        }
-      });
-    });
+  <script src="/assets/js/login.js"> 
+   
   </script>
 
   {{!-- <div class="bg-img inner-cont">

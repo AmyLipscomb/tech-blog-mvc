@@ -5,6 +5,7 @@ const SALT = 15;
 
 class User extends Model {
     checkPassword(loginPw) {
+        console.log(loginPw)
         return bcrypt.compareSync(loginPw, this.password);
     }
 }
